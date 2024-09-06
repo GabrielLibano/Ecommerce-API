@@ -8,11 +8,10 @@ import jakarta.persistence.Id;
 
 @Entity
 public class Produto {
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
+
 	@Column(nullable = false, length = 50)
 	private String nome;
 
@@ -31,6 +30,5 @@ public class Produto {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
-	
+
 }
