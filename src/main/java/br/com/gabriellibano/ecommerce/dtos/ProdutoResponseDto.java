@@ -1,8 +1,18 @@
 package br.com.gabriellibano.ecommerce.dtos;
 
+import org.modelmapper.ModelMapper;
+
+import br.com.gabriellibano.ecommerce.model.Produto;
+
 public class ProdutoResponseDto {
     private Long id;
 	private String nome;
+    private static final ModelMapper modelMapper = new ModelMapper();
+
+    
+    public ProdutoResposeDto toDto(Produto produto){
+    	return modelMapper.map(produto, ProdutoResposeDto.class);
+    }
 
     public Long getId() {
         return id;
