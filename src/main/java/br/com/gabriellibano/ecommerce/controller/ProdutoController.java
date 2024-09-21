@@ -29,21 +29,17 @@ public class ProdutoController {
 
     @GetMapping
     public List<ProdutoResponseDto> list() {
-        List<ProdutoResponseDto> dtos = produtoService.list()
+        return produtoService.list()
         		.stream()
-        		.map(produto -> new ProdutoResponseDto().toDto(produto))
+        		.map(e -> new ProdutoResponseDto().toDto(e))
         		.toList();
-        return dtos;
     }
 
     @PostMapping
     public ProdutoResponseDto create(@RequestBody ProdutoRequestCreateDto dto) {
-        // ProdutoRequestCreateDto -> Produto
-        // Produto saved = produtoService.save();
-        // Produto -> ProdutoResponseDto
-        return null;
+    	return new ProdutoResponseDto().toDto(
+        		produtoService.save(dto.toModel()));
     }
-
     // localhost:8080/produtos/5
     /* body/payload: {
             "id": 5,
@@ -55,19 +51,17 @@ public class ProdutoController {
                         @PathVariable Long id, 
                         @RequestBody ProdutoRequestUpdateDto dto) {
         if (! produtoService.existsById(id)){
-            new RuntimeException("Id inexistente");
+            throw new RuntimeException("Id inexistente");
         }
 
-        // ProdutoRequestUpdateDto -> Produto
-        // Produto saved = produtoService.save(produto);
-        // Produto -> ProdutoResponseDto
-        return null;
+        return new ProdutoResponseDto().toDto(
+        		produtoService.save(dto.toModel(id)));
     }
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable Long id) {
-        if (! produtoService.existsById(id)){
-            new RuntimeException("Id inexistente");
+        if (!produtoService.existsById(id)){
+            throw new RuntimeException("Id inexistente");
         }
 
         produtoService.delete(id);
@@ -75,17 +69,11 @@ public class ProdutoController {
 
     @GetMapping("{id}")
     public ProdutoResponseDto findById(@PathVariable Long id) {
-        Optional<Produto> opt = produtoService.findById(id);
-
-        Produto produto = null;
-        if (opt.isPresent()) {
-            produto = opt.get();
-
-        } else {
-            new RuntimeException("Id inexistente");
-        }
-
-        return null;
+    	
+       return produtoService
+    		   .findById(id)
+    		   .map(e -> new ProdutoResponseDto().toDto(e))
+    		   .orElseThrow(() -> new RuntimeException("Id inexistente"));
     }
 }
 

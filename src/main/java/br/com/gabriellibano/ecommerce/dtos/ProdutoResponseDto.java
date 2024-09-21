@@ -10,8 +10,8 @@ public class ProdutoResponseDto {
     private static final ModelMapper modelMapper = new ModelMapper();
 
     
-    public ProdutoResposeDto toDto(Produto produto){
-    	return modelMapper.map(produto, ProdutoResposeDto.class);
+    public ProdutoResponseDto toDto(Produto produto){
+    	return modelMapper.map(produto, ProdutoResponseDto.class);
     }
 
     public Long getId() {
