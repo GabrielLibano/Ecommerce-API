@@ -1,4 +1,4 @@
-package br.com.gabriellibano.repository;
+package br.com.gabriellibano.ecommerce.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

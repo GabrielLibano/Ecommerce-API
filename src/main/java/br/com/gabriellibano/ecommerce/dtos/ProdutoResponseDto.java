@@ -9,12 +9,6 @@ public class ProdutoResponseDto {
 	
 	public ProdutoResponseDto toDto(Produto produto) {
         return modelMapper.map(produto, ProdutoResponseDto.class);
-
-        // ProdutoResponseDto result = new ProdutoResponseDto();
-        // result.setId(produto.getId());
-        // result.setNome(produto.getNome());
-
-        // return result;
     }
 
     public Long getId() {
