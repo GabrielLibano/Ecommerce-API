@@ -1,12 +1,10 @@
 package br.com.gabriellibano.ecommerce.dtos.produto;
 
-import org.modelmapper.ModelMapper;
-
-import br.com.gabriellibano.ecommerce.model.Produto;
+import java.math.BigDecimal;
 
 public class ProdutoRequestUpdateDto {
 	private String nome;
-	private static final ModelMapper modelMapper = new ModelMapper();
+	private BigDecimal valor;
 
 	public String getNome() {
 		return nome;
@@ -15,10 +13,11 @@ public class ProdutoRequestUpdateDto {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
-	public Produto toModel(Long id) {
-		Produto result = modelMapper.map(this, Produto.class);
-		result.setId(id);
-		return result;
-	}
+	
+	public BigDecimal getValor() {
+        return valor;
+    }
+    public void setValor(BigDecimal valor) {
+        this.valor = valor;
+    }
 }

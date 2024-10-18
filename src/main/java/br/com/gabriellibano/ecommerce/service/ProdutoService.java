@@ -3,17 +3,16 @@ package br.com.gabriellibano.ecommerce.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.gabriellibano.ecommerce.model.Produto;
 import br.com.gabriellibano.ecommerce.repository.ProdutoRepository;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class ProdutoService {
-
-    @Autowired(required=true)
-    private ProdutoRepository produtoRepository;
+	private final ProdutoRepository produtoRepository = null;
 
     public List<Produto> list() {
         return produtoRepository.findAll();
@@ -35,5 +34,5 @@ public class ProdutoService {
         return produtoRepository.findById(id);
     }
 
-
+   
 }
