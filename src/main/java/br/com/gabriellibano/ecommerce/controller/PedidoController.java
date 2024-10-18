@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.gabriellibano.ecommerce.dtos.ProdutoResponseDto;
 import br.com.gabriellibano.ecommerce.dtos.pedido.PedidoRequestCreateDto;
 import br.com.gabriellibano.ecommerce.dtos.pedido.PedidoRequestUpdateDto;
 import br.com.gabriellibano.ecommerce.dtos.pedido.PedidoResponseDto;
+import br.com.gabriellibano.ecommerce.dtos.produto.ProdutoResponseDto;
 import br.com.gabriellibano.ecommerce.service.PedidoService;
 
 @RestController

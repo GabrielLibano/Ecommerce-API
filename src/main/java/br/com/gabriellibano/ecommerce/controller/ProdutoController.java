@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.gabriellibano.ecommerce.dtos.ProdutoRequestCreateDto;
-import br.com.gabriellibano.ecommerce.dtos.ProdutoRequestUpdateDto;
-import br.com.gabriellibano.ecommerce.dtos.ProdutoResponseDto;
+import br.com.gabriellibano.ecommerce.dtos.produto.ProdutoRequestCreateDto;
+import br.com.gabriellibano.ecommerce.dtos.produto.ProdutoRequestUpdateDto;
+import br.com.gabriellibano.ecommerce.dtos.produto.ProdutoResponseDto;
 import br.com.gabriellibano.ecommerce.service.ProdutoService;
 
 @RestController
