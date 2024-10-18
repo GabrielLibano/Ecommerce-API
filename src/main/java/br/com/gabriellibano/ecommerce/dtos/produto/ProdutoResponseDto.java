@@ -2,6 +2,9 @@ package br.com.gabriellibano.ecommerce.dtos.produto;
 
 import java.math.BigDecimal;
 
+import lombok.Data;
+
+@Data
 public class ProdutoResponseDto {
 	private Long id;
 	private String nome;

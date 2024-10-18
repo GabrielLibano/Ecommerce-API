@@ -11,26 +11,34 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.gabriellibano.ecommerce.dtos.produto.ProdutoRequestCreateDto;
 import br.com.gabriellibano.ecommerce.dtos.produto.ProdutoRequestUpdateDto;
 import br.com.gabriellibano.ecommerce.dtos.produto.ProdutoResponseDto;
+import br.com.gabriellibano.ecommerce.mapper.ProdutoMapper;
+import br.com.gabriellibano.ecommerce.repository.ProdutoRepository;
 import br.com.gabriellibano.ecommerce.service.ProdutoService;
+import br.com.gabriellibano.ecommerce.views.ProdutoFullView;
+import br.com.gabriellibano.ecommerce.views.ProdutoSimpleView;
+import br.com.gabriellibano.ecommerce.views.ProdutoViewType;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/produtos")
 @RequiredArgsConstructor
 public class ProdutoController {
-	private final ProdutoService produtoService;
-	private final ProdutoMapper produtoMapper;
+	private final ProdutoService produtoService = new ProdutoService();
+	private final ProdutoMapper produtoMapper = new ProdutoMapper();
+    private final ProdutoRepository produtoRepository;
+
 
     @GetMapping
     public ResponseEntity<List<ProdutoResponseDto>> list() {
     	List<ProdutoResponseDto> dtos = produtoService.list()
                 .stream()
-                .map(e -> new produtoMapper.toDto(e))
+                .map(e -> produtoMapper.toDto(e))
                 .toList();
 
             return ResponseEntity.ok().body(dtos);
@@ -77,5 +85,19 @@ public class ProdutoController {
     					.orElseThrow(() -> new RuntimeException("Id inexistente"))
     			);
 
+    }
+    
+    
+    @GetMapping("/find")
+    public  ResponseEntity<?> findByNome(
+                @RequestParam String nome, 
+                ProdutoViewType type) { 
+        switch (type) {
+            case FULL:
+                return ResponseEntity.ok().body(produtoRepository.findAllByNomeContains(nome, ProdutoFullView.class));                
+            case SIMPLE:
+                return ResponseEntity.ok().body(produtoRepository.findAllByNomeContains(nome, ProdutoSimpleView.class));            
+        }
+        return ResponseEntity.noContent().build();
     }
 }
