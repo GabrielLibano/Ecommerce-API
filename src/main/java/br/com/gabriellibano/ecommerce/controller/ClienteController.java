@@ -2,6 +2,12 @@ package br.com.gabriellibano.ecommerce.controller;
 
 import java.util.List;
 
+import br.com.gabriellibano.ecommerce.mapper.ClienteMapper;
+import br.com.gabriellibano.ecommerce.mapper.ProdutoMapper;
+import br.com.gabriellibano.ecommerce.repository.ClienteRepository;
+import br.com.gabriellibano.ecommerce.repository.ProdutoRepository;
+import br.com.gabriellibano.ecommerce.service.ProdutoService;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,19 +28,18 @@ import br.com.gabriellibano.ecommerce.service.ClienteService;
 
 @RestController
 @RequestMapping("/clientes")
+@RequiredArgsConstructor
 public class ClienteController {
 
-    @Autowired
-    private ClienteService clienteService;
-
-    @Autowired
-    private ModelMapper modelMapper;
+    private final ClienteService clienteService;
+    private final ClienteMapper clienteMapper;
+    private final ClienteRepository clienteRepository;
 
     @GetMapping
     public ResponseEntity<List<ClienteResponseDto>> list() {
         List<ClienteResponseDto> dtos = clienteService.list()
             .stream()
-            .map(e -> new ClienteResponseDto().toDto(e))
+            .map(e -> clienteMapper.toDto(e))
             .toList();
         
         return ResponseEntity.ok().body(dtos);
@@ -44,10 +49,9 @@ public class ClienteController {
     public ResponseEntity<ClienteResponseDto> create(@RequestBody ClienteRequestCreateDto dto) {        
         return ResponseEntity
         		.status(HttpStatus.CREATED)
-        		.body(
-        			new ClienteResponseDto().toDto(
-        					clienteService.save(dto.toModel()))
-        			);
+        		.body(clienteMapper.toDto(
+                        clienteService.save(clienteMapper.toModel(dto)))
+                );
     }
 
     @PutMapping("{id}")
@@ -58,10 +62,9 @@ public class ClienteController {
             throw new RuntimeException("Id inexistente");
         }                
         return ResponseEntity.ok()
-        		.body(
-        			new ClienteResponseDto().toDto(
-        				clienteService.save(dto.toModel(id)))
-        		);
+        		.body(clienteMapper.toDto(
+                        clienteService.save(clienteMapper.toModel(id, dto)))
+                );
     }
     
     @DeleteMapping("{id}")
@@ -77,11 +80,11 @@ public class ClienteController {
     public ResponseEntity<ClienteResponseDto> findById(@PathVariable Long id) {    	
     	return ResponseEntity.ok()
     			.body(
-    				clienteService
-    					.findById(id)
-    					.map(e -> new ClienteResponseDto().toDto(e))
-    					.orElseThrow(() -> new RuntimeException("Id inexistente"))
-    			);
+                        clienteService
+                                .findById(id)
+                                .map(e -> clienteMapper.toDto(e))
+                                .orElseThrow(() -> new RuntimeException("Id inexistente"))
+                );
     	  		     
     }
 
